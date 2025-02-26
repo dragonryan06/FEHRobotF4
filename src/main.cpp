@@ -1,7 +1,11 @@
+#include <string.h>
+
 #include <FEHLCD.h>
 #include <FEHMotor.h>
 #include <FEHIO.h>
+
 #include "utility.h"
+
 #define VERSION_STR "v1.0.0 Milestone 1"
 
 FEHMotor MotorL(FEHMotor::Motor2, 9.0);
@@ -42,8 +46,8 @@ void cue3()
 int main(void)
 {
     LCD.Clear(BLACK);
-    LCD.WriteAt(VERSION_STR, 54, 0);
-    LCD.WriteAt("(TAP ANYWHERE TO START)", 22, 120);
+    LCD.WriteRC(VERSION_STR, 0, (25-strlen(VERSION_STR))*0.5 + 1);
+    LCD.WriteRC("(TAP ANYWHERE TO START)", 5, 2);
 
     waitForTouch();
     LCD.Clear(BLACK);

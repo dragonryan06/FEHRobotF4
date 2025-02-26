@@ -3,13 +3,14 @@
 #include <FEHLCD.h>
 #include <FEHMotor.h>
 #include <FEHIO.h>
+#include <FEHUtility.h>
 
-#include "utility.h"
+#include "core/utility.h"
+#include "core/movement.h"
 
 #define VERSION_STR "v1.0.0 Milestone 1"
 
-FEHMotor MotorL(FEHMotor::Motor2, 9.0);
-FEHMotor MotorR(FEHMotor::Motor3, 9.0);
+StateMachine stateMachine;
 DigitalEncoder EncoderL(FEHIO::P0_0);
 DigitalEncoder EncoderR(FEHIO::P0_0);
 
@@ -20,7 +21,13 @@ DigitalEncoder EncoderR(FEHIO::P0_0);
  */
 void cue1() 
 {
-
+    stateMachine.drive(20);
+    Sleep(0.75);
+    stateMachine.stop();
+    Sleep(0.75);
+    stateMachine.drive(-20);
+    Sleep(0.75);
+    stateMachine.stop();
 }
 
 /**

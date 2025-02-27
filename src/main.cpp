@@ -8,9 +8,12 @@
 #include "core/utility.h"
 #include "core/movement.h"
 
-#define VERSION_STR "v1.0.0 Milestone 1"
+#define VERSION_STR "v1.1.0 Milestone 1"
 
 StateMachine stateMachine;
+DigitalInputPin SwitchFL(FEHIO::P0_0);
+DigitalInputPin SwitchFR(FEHIO::P0_0);
+DigitalInputPin SwitchBC(FEHIO::P0_0);
 DigitalEncoder EncoderL(FEHIO::P0_0);
 DigitalEncoder EncoderR(FEHIO::P0_0);
 
@@ -28,6 +31,10 @@ void cue1()
     stateMachine.drive(-20);
     Sleep(0.75);
     stateMachine.stop();
+
+    stateMachine.drive(50);
+    while (SwitchFL.Value() && SwitchFR.Value()); // TODO waiting like this should be done differently so theres a timeout as well
+    stateMachine.stop();
 }
 
 /**
@@ -37,7 +44,9 @@ void cue1()
  */
 void cue2() 
 {
-
+    stateMachine.drive(50);
+    Sleep(1.0); // TODO swap for encoder if possible
+    stateMachine.stop();
 }
 
 /**
@@ -47,7 +56,9 @@ void cue2()
  */
 void cue3() 
 {
-
+    stateMachine.drive(-50); // Should we reverse or turn 180*?
+    Sleep(1.0); // TODO swap for encoder if possible
+    stateMachine.stop();
 }
 
 int main(void)
@@ -62,9 +73,13 @@ int main(void)
     LCD.WriteRC("Executing CUE 1...",0,0);
     cue1();
     LCD.WriteRC("done",0,18);
+
+    breakpoint();
+
     LCD.WriteRC("Executing CUE 2...",1,0);
     cue2();
     LCD.WriteRC("done",1,18);
+
     LCD.WriteRC("Executing CUE 3...",2,0);
     cue3();
     LCD.WriteRC("done",2,18);

@@ -55,8 +55,8 @@ class StateMachine
         void turnRight90();
     private:
         STATE currentState;
-        FEHMotor motorL{ FEHMotor::Motor2, 9.0 };
-        FEHMotor motorR{ FEHMotor::Motor1, 9.0 };
+        FEHMotor motorL{ FEHMotor::Motor1, 9.0 };
+        FEHMotor motorR{ FEHMotor::Motor2, 9.0 };
         DigitalEncoder encoderL{ FEHIO::P0_0 };
         DigitalEncoder encoderR{ FEHIO::P1_0 };
 };

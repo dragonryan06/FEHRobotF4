@@ -8,7 +8,7 @@
 #include "core/utility.h"
 #include "core/movement.h"
 
-#define VERSION_STR "v1.1.2 Milestone 1"
+#define VERSION_STR "v1.1.3 Milestone 1"
 
 StateMachine stateMachine;
 
@@ -19,7 +19,7 @@ StateMachine stateMachine;
  */
 void cue1() 
 {
-    stateMachine.drive(20, 28.5);
+    stateMachine.drive(32, 27);
 }
 
 /**
@@ -29,9 +29,7 @@ void cue1()
  */
 void cue2() 
 {
-    stateMachine.drive(20);
-    Sleep(1.0); // TODO swap for encoder if possible
-    stateMachine.stop();
+    stateMachine.drive(32, 24.5);
 }
 
 /**
@@ -41,9 +39,7 @@ void cue2()
  */
 void cue3() 
 {
-    stateMachine.drive(-20); // Should we reverse or turn 180*?
-    Sleep(1.0); // TODO swap for encoder if possible
-    stateMachine.stop();
+    stateMachine.drive(-32, 24.5);
 }
 
 int main(void)

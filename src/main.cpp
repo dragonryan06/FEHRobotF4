@@ -8,14 +8,9 @@
 #include "core/utility.h"
 #include "core/movement.h"
 
-#define VERSION_STR "v1.1.0 Milestone 1"
+#define VERSION_STR "v1.1.2 Milestone 1"
 
 StateMachine stateMachine;
-DigitalInputPin SwitchFL(FEHIO::P0_0);
-DigitalInputPin SwitchFR(FEHIO::P0_0);
-DigitalInputPin SwitchBC(FEHIO::P0_0);
-DigitalEncoder EncoderL(FEHIO::P0_0);
-DigitalEncoder EncoderR(FEHIO::P0_0);
 
 /**
  * Starting with the robot's back to the far right side of the 
@@ -24,17 +19,7 @@ DigitalEncoder EncoderR(FEHIO::P0_0);
  */
 void cue1() 
 {
-    stateMachine.drive(20);
-    Sleep(0.75);
-    stateMachine.stop();
-    Sleep(0.75);
-    stateMachine.drive(-20);
-    Sleep(0.75);
-    stateMachine.stop();
-
-    stateMachine.drive(50);
-    while (SwitchFL.Value() && SwitchFR.Value()); // TODO waiting like this should be done differently so theres a timeout as well
-    stateMachine.stop();
+    stateMachine.drive(20, 28.5);
 }
 
 /**
@@ -44,7 +29,7 @@ void cue1()
  */
 void cue2() 
 {
-    stateMachine.drive(50);
+    stateMachine.drive(20);
     Sleep(1.0); // TODO swap for encoder if possible
     stateMachine.stop();
 }
@@ -56,7 +41,7 @@ void cue2()
  */
 void cue3() 
 {
-    stateMachine.drive(-50); // Should we reverse or turn 180*?
+    stateMachine.drive(-20); // Should we reverse or turn 180*?
     Sleep(1.0); // TODO swap for encoder if possible
     stateMachine.stop();
 }

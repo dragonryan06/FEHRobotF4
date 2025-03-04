@@ -1,2 +1,7 @@
 fehproteusfirmware/
 Makefile
+*.d
+*.o
+*.elf
+*.s19
+*.map

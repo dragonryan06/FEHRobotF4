@@ -1,5 +1,6 @@
 fehproteusfirmware/
 Makefile
+.vscode/
 *.d
 *.o
 *.elf

@@ -9,7 +9,7 @@
 #include "core/movement.h"
 #include "sensing/light.h"
 
-#define VERSION_STR "v1.2.0 Milestone 2"
+#define VERSION_STR "v1.3.0 Milestone 2"
 #define START_LIGHT_THRESH 0.5
 
 StateMachine stateMachine;
@@ -24,7 +24,20 @@ void cue1()
     LCD.WriteLine("CUE 1: Waiting for light");
     while (lightDetector.getCdSIntens() < START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
-
+    // Turn to face the ramp
+    stateMachine.turn(12345); // FIND ANGLE
+    // Drive to and up the ramp
+    stateMachine.drive(35, 12345); // FIND DISTANCE (possibly drive slower up the ramp? faster?)
+    // Turn to face the humidifier light
+    stateMachine.turn(12345); // FIND ANGLE
+    // Get onto the followable line
+    stateMachine.drive(35);
+    while (lightDetector.getLineFollowState() == lightDetector.UNKNOWN);
+    stateMachine.stop();
+    // Follow the line to its end to straighten out
+    stateMachine.lineFollow(35, &lightDetector);
+    // Reverse a known distance, hopefully now straightened.
+    stateMachine.drive(-35, 12345); // FIND DISTANCE
 }
 
 /**
@@ -33,7 +46,25 @@ void cue1()
  */
 void taskHumidifier()
 {
+    // Wait for the light to be detected
+    unsigned int color = lightDetector.getCdSColor();
+    while (color == BLACK) { color = lightDetector.getCdSColor(); }
 
+    if (color == RED)
+    {
+        // Display red and press red button
+        LCD.Clear(RED);
+        stateMachine.turn(12345); // FIND ANGLE
+        stateMachine.drive(35, 12345); // FIND DISTANCE
+    }
+    else//                                 ALSO THESE BUTTONS HAVE LINES IN FRONT OF THEM!!
+    {
+        // Display blue and press blue button
+        LCD.Clear(BLUE);
+        stateMachine.turn(12345); // FIND ANGLE
+        stateMachine.drive(35, 12345); // FIND DISTANCE
+    }
+    LCD.Clear(BLACK);
 }
 
 /**
@@ -42,7 +73,16 @@ void taskHumidifier()
  */
 void cue2()
 {
-
+    // Turn around
+    stateMachine.turn(12345); // FIND ANGLE
+    // Drive back to ramp
+    stateMachine.drive(35, 12345); // FIND DISTANCE
+    // Turn to face down ramp
+    stateMachine.turn(12345); // FIND ANGLE
+    // Drive back to start box
+    stateMachine.drive(35, 12345);
+    // Turn to face stop button
+    stateMachine.turn(12345); // FIND ANGLE
 }
 
 /**
@@ -50,7 +90,7 @@ void cue2()
  */
 void taskStop()
 {
-
+    stateMachine.drive(35, 12345); // FIND DISTANCE
 }
 
 int main(void)

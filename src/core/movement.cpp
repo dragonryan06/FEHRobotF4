@@ -5,6 +5,7 @@
 #include <FEHLCD.h>
 
 #include "movement.h"
+#include "../sensing/light.h"
 
 #define COUNTS_PER_INCH 34
 #define COUNTS_PER_DEG 2
@@ -34,6 +35,34 @@ void StateMachine::drive(int speed, float inches)
 
     while (encoderL.Counts() < (int)(inches * COUNTS_PER_INCH));
     
+    stop();
+}
+
+void StateMachine::lineFollow(int speed, LightDetector* lightDetector) 
+{
+    motorL.SetPercent(-speed);
+    motorR.SetPercent(speed);
+    currentState = STATE::MOVING;
+    LightDetector::LINE_STATE state = lightDetector->getLineFollowState();
+    while (state != LightDetector::UNKNOWN) 
+    {
+        switch (state) 
+        {
+            case LightDetector::OK:
+                motorL.SetPercent(-speed);
+                motorR.SetPercent(speed);
+                break;
+            case LightDetector::TOO_LEFT:
+                motorL.SetPercent(-speed-1);
+                motorR.SetPercent(speed-1);
+                break;
+            case LightDetector::TOO_RIGHT:
+                motorL.SetPercent(-speed+1);
+                motorR.SetPercent(speed+1);
+                break;
+        }
+        state = lightDetector->getLineFollowState();
+    }
     stop();
 }
 

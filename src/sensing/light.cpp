@@ -1,8 +1,10 @@
+#include <FEHLCD.h>
+
 #include "light.h"
 
-LightDetector::SENSED_COLOR LightDetector::getCdSColor() 
+unsigned int LightDetector::getCdSColor() 
 {
-
+    return BLACK;
 }
 
 float LightDetector::getCdSIntens()

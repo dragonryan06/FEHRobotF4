@@ -15,18 +15,13 @@ class LightDetector
             TOO_RIGHT,
             OK
         };
-        enum SENSED_COLOR 
-        {
-            RED,
-            BLUE
-        };
 
         /**
          * Determines the color of the light under
-         * the CdS sensor and returns an enumerated
+         * the CdS sensor and returns an FEHLCD
          * value based on color.
          */
-        SENSED_COLOR getCdSColor();
+        unsigned int getCdSColor();
 
         /**
          * Returns the raw-er CdS cell Value().

@@ -10,6 +10,7 @@
 #include "sensing/light.h"
 
 #define VERSION_STR "v1.2.0 Milestone 2"
+#define START_LIGHT_THRESH 0.5
 
 StateMachine stateMachine;
 LightDetector lightDetector;
@@ -21,7 +22,9 @@ LightDetector lightDetector;
 void cue1()
 {
     LCD.WriteLine("CUE 1: Waiting for light");
-    
+    while (lightDetector.getCdSIntens() < START_LIGHT_THRESH);
+    LCD.WriteLine("CUE 1: Moving!");
+
 }
 
 /**

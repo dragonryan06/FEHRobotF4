@@ -43,16 +43,13 @@ class StateMachine
         void stop();
 
         /**
-         * Turns the robot in place 90 degrees to the 
-         * left.
+         * Turns the robot in place a number of degrees, negative
+         * being to the left and positive being to the right.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
-        void turnLeft90();
-
-        /**
-         * Turns the robot in place 90 degrees to the
-         * right.
-         */
-        void turnRight90();
+        void turn(float deg);
     private:
         STATE currentState;
         FEHMotor motorL{ FEHMotor::Motor1, 9.0 };

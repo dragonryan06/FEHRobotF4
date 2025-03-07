@@ -37,8 +37,8 @@ class LightDetector
 
     private:
         LINE_STATE state = LINE_STATE::UNKNOWN;
-        AnalogInputPin cdS{ FEHIO::P0_0 };
-        AnalogInputPin optR{ FEHIO::P0_0 };
-        AnalogInputPin optC{ FEHIO::P0_0 };
-        AnalogInputPin optL{ FEHIO::P0_0 };
+        AnalogInputPin cdS{ FEHIO::P3_0 };
+        AnalogInputPin optR{ FEHIO::P2_0 };
+        AnalogInputPin optC{ FEHIO::P2_2 };
+        AnalogInputPin optL{ FEHIO::P2_4 };
 };

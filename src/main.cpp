@@ -9,8 +9,8 @@
 #include "core/movement.h"
 #include "sensing/light.h"
 
-#define VERSION_STR "v1.3.0 Milestone 2"
-#define START_LIGHT_THRESH 0.5
+#define VERSION_STR "v1.3.3 Milestone 2"
+#define START_LIGHT_THRESH 2.5
 
 StateMachine stateMachine;
 LightDetector lightDetector;
@@ -22,22 +22,16 @@ LightDetector lightDetector;
 void cue1()
 {
     LCD.WriteLine("CUE 1: Waiting for light");
-    while (lightDetector.getCdSIntens() < START_LIGHT_THRESH);
+    while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
     // Turn to face the ramp
-    stateMachine.turn(12345); // FIND ANGLE
+    stateMachine.turn(52);
     // Drive to and up the ramp
-    stateMachine.drive(35, 12345); // FIND DISTANCE (possibly drive slower up the ramp? faster?)
+    stateMachine.drive(35, 40);
     // Turn to face the humidifier light
-    stateMachine.turn(12345); // FIND ANGLE
-    // Get onto the followable line
-    stateMachine.drive(35);
-    while (lightDetector.getLineFollowState() == lightDetector.UNKNOWN);
-    stateMachine.stop();
-    // Follow the line to its end to straighten out
-    stateMachine.lineFollow(35, &lightDetector);
-    // Reverse a known distance, hopefully now straightened.
-    stateMachine.drive(-35, 12345); // FIND DISTANCE
+    stateMachine.turn(-122);
+    // Get to the sensor
+    stateMachine.drive(35, 12);
 }
 
 /**
@@ -54,15 +48,15 @@ void taskHumidifier()
     {
         // Display red and press red button
         LCD.Clear(RED);
-        stateMachine.turn(12345); // FIND ANGLE
-        stateMachine.drive(35, 12345); // FIND DISTANCE
+        stateMachine.turn(8);
+        stateMachine.drive(35, 6);
     }
     else//                                 ALSO THESE BUTTONS HAVE LINES IN FRONT OF THEM!!
     {
         // Display blue and press blue button
         LCD.Clear(BLUE);
-        stateMachine.turn(12345); // FIND ANGLE
-        stateMachine.drive(35, 12345); // FIND DISTANCE
+        stateMachine.turn(-20);
+        stateMachine.drive(35, 6);
     }
     LCD.Clear(BLACK);
 }

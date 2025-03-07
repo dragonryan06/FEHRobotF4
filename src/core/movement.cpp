@@ -90,6 +90,6 @@ void StateMachine::turn(float deg)
         motorR.SetPercent(-TURN_SPEED);
     }
 
-    while (encoderL.Counts() < deg*COUNTS_PER_DEG);
+    while (encoderL.Counts() < abs(deg)*COUNTS_PER_DEG);
     stop();
 }

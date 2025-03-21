@@ -137,3 +137,35 @@ void StateMachine::pivotR(float deg)
     while (encoderL.Counts() < abs(deg)*COUNTS_PER_DEG*2);
     stop();
 }
+
+void StateMachine::pivotL(float deg, float speed) 
+{
+    currentState = STATE::TURNING;
+    encoderR.ResetCounts();
+    if (deg < 0)
+    {
+        motorR.SetPercent(speed);
+    }
+    else 
+    {
+        motorR.SetPercent(-speed);
+    }
+    while (encoderR.Counts() < abs(deg)*COUNTS_PER_DEG*2);
+    stop();
+}
+
+void StateMachine::pivotR(float deg, float speed)
+{
+    currentState = STATE::TURNING;
+    encoderL.ResetCounts();
+    if (deg < 0)
+    {
+        motorL.SetPercent(-speed);
+    }
+    else 
+    {
+        motorL.SetPercent(speed);
+    }
+    while (encoderL.Counts() < abs(deg)*COUNTS_PER_DEG*2);
+    stop();
+}

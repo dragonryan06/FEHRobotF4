@@ -4,12 +4,13 @@
 #include <FEHMotor.h>
 #include <FEHIO.h>
 #include <FEHUtility.h>
+#include <FEHBattery.h>
 
 #include "core/utility.h"
 #include "core/movement.h"
 #include "sensing/light.h"
 
-#define VERSION_STR "v1.3.3 Milestone 2"
+#define VERSION_STR "v1.3.5 Milestone 3"
 #define START_LIGHT_THRESH 2.5
 
 StateMachine stateMachine;
@@ -17,7 +18,7 @@ LightDetector lightDetector;
 
 /**
  * Waits for the start light, then drives to the upper
- * level and positions itself at the humidifier light.
+ * level and positions itself ready to back into the window.
  */
 void cue1()
 {
@@ -25,72 +26,42 @@ void cue1()
     while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
     // Turn to face the ramp
-    stateMachine.turn(52);
+    stateMachine.turn(86);
     // Drive to and up the ramp
-    stateMachine.drive(35, 40);
-    // Turn to face the humidifier light
-    stateMachine.turn(-122);
-    // Get to the sensor
-    stateMachine.drive(35, 12);
+    stateMachine.drive(35, 39.75);
+    // Pivot to align with the window
+    stateMachine.pivotL(122);
 }
 
 /**
- * Reads and displays the color of the humidifier light, 
- * then pushes the corresponding button in front of it.
+ * Backs into the window, opening it, then pulls around to
+ * put the handle on the other side of the block, closing
+ * it again.
  */
-void taskHumidifier()
+void taskWindow()
 {
-    // Wait for the light to be detected
-    unsigned int color = lightDetector.getCdSColor();
-    while (color == BLACK) { color = lightDetector.getCdSColor(); }
-
-    if (color == RED)
-    {
-        // Display red and press red button
-        LCD.Clear(RED);
-        stateMachine.turn(8);
-        stateMachine.drive(35, 6);
-    }
-    else//                                 ALSO THESE BUTTONS HAVE LINES IN FRONT OF THEM!!
-    {
-        // Display blue and press blue button
-        LCD.Clear(BLUE);
-        stateMachine.turn(-20);
-        stateMachine.drive(35, 6);
-    }
-    LCD.Clear(BLACK);
-}
-
-/**
- * Drives back to the lower level and positions itself 
- * in the start box, ready to press the final button.
- */
-void cue2()
-{
-    // Turn around
-    stateMachine.turn(12345); // FIND ANGLE
-    // Drive back to ramp
-    stateMachine.drive(35, 12345); // FIND DISTANCE
-    // Turn to face down ramp
-    stateMachine.turn(12345); // FIND ANGLE
-    // Drive back to start box
-    stateMachine.drive(35, 12345);
-    // Turn to face stop button
-    stateMachine.turn(12345); // FIND ANGLE
-}
-
-/**
- * When aligned with the stop button, presses it.
- */
-void taskStop()
-{
-    stateMachine.drive(35, 12345); // FIND DISTANCE
+    // Reverse to the window
+    stateMachine.drive(-35, 6);
+    // HIT the window!!
+    stateMachine.drive(-35, -100, 1);
+    stateMachine.drive(-35, -60, 7);
+    // Turn all the way around to be on the other side
+    stateMachine.drive(35, 9);
+    stateMachine.pivotL(15);
+    stateMachine.drive(-35, 11);
+    stateMachine.pivotR(-30);
+    stateMachine.drive(100, 35, 0.75);
+    stateMachine.pivotL(-5, 100);
+    stateMachine.pivotL(-50);
 }
 
 int main(void)
 {
     LCD.Clear(BLACK);
     LCD.WriteRC(VERSION_STR, 0, (25-strlen(VERSION_STR))*0.5 + 1);
+    LCD.WriteRC("Battery: ", 1, 8);
+    LCD.WriteRC((int)(Battery.Value()*100.0/11.2), 1, 17);
+    LCD.WriteRC("%", 1, 19);
     LCD.WriteRC("(TAP ANYWHERE TO START)", 5, 2);
 
     waitForTouch();
@@ -99,14 +70,8 @@ int main(void)
     LCD.WriteLine("Executing CUE 1");
     cue1();
     
-    LCD.WriteLine("Executing TASK Humidifier");
-    taskHumidifier();
-
-    LCD.WriteLine("Executing CUE 2");
-    cue2();
-
-    LCD.WriteLine("Pressing STOP!");
-    taskStop();
+    LCD.WriteLine("Executing TASK WINDOW");
+    taskWindow();
 
 	return 0;
 }

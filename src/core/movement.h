@@ -85,6 +85,22 @@ class StateMachine
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
         void pivotR(float deg);
+
+        /**
+         * Turns the robot with the left wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotL(float deg, float speed);
+
+        /**
+         * Turns the robot with the right wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotR(float deg, float speed);
     private:
         STATE currentState;
         FEHMotor motorL{ FEHMotor::Motor1, 9.0 };

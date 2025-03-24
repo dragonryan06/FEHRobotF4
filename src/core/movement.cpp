@@ -3,6 +3,7 @@
 #include <FEHMotor.h>
 #include <FEHIO.h>
 #include <FEHLCD.h>
+#include <FEHBattery.h>
 
 #include "movement.h"
 #include "../sensing/light.h"
@@ -10,27 +11,33 @@
 #define COUNTS_PER_INCH 34
 #define COUNTS_PER_DEG 2
 #define TURN_SPEED 25
+#define BATTERY_MAX 11.5
 
 StateMachine::StateMachine() 
 { 
     currentState = STATE::STOPPED;
 }
 
-void StateMachine::drive(int speed) 
+void StateMachine::adjustForBattery(float* speed)
 {
+    *speed *= (BATTERY_MAX/Battery.Voltage());
+}
+
+void StateMachine::drive(float speed) 
+{
+    adjustForBattery(&speed);
     motorL.SetPercent(-speed);
     motorR.SetPercent(speed);
     if (speed < 0) motorL.SetPercent(-speed-1);
     currentState = STATE::MOVING;
 }
 
-void StateMachine::drive(int speed, float inches)
+void StateMachine::drive(float speed, float inches)
 {
+    adjustForBattery(&speed);
     encoderL.ResetCounts();
     motorL.SetPercent(-speed);
     motorR.SetPercent(speed);
-    // Reverse causes a bit of a veer
-    // if (speed < 0) motorL.SetPercent(-speed-1);
     currentState = STATE::MOVING;
 
     while (encoderL.Counts() < (int)(inches * COUNTS_PER_INCH));
@@ -38,8 +45,10 @@ void StateMachine::drive(int speed, float inches)
     stop();
 }
 
-void StateMachine::drive(int speedL, int speedR, float inches)
+void StateMachine::drive(float speedL, float speedR, float inches)
 {
+    adjustForBattery(&speedL);
+    adjustForBattery(&speedR);
     encoderL.ResetCounts();
     motorL.SetPercent(-speedL);
     motorR.SetPercent(speedR);
@@ -50,8 +59,9 @@ void StateMachine::drive(int speedL, int speedR, float inches)
     stop();
 }
 
-void StateMachine::lineFollow(int speed, LightDetector* lightDetector) 
+void StateMachine::lineFollow(float speed, LightDetector* lightDetector) 
 {
+    adjustForBattery(&speed);
     motorL.SetPercent(-speed);
     motorR.SetPercent(speed);
     currentState = STATE::MOVING;
@@ -140,6 +150,7 @@ void StateMachine::pivotR(float deg)
 
 void StateMachine::pivotL(float deg, float speed) 
 {
+    adjustForBattery(&speed);
     currentState = STATE::TURNING;
     encoderR.ResetCounts();
     if (deg < 0)
@@ -156,6 +167,7 @@ void StateMachine::pivotL(float deg, float speed)
 
 void StateMachine::pivotR(float deg, float speed)
 {
+    adjustForBattery(&speed);
     currentState = STATE::TURNING;
     encoderL.ResetCounts();
     if (deg < 0)

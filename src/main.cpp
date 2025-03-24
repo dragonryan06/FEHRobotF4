@@ -10,7 +10,7 @@
 #include "core/movement.h"
 #include "sensing/light.h"
 
-#define VERSION_STR "v1.3.5 Milestone 3"
+#define VERSION_STR "v1.4.1 Milestone 3"
 #define START_LIGHT_THRESH 2.5
 
 StateMachine stateMachine;
@@ -67,11 +67,13 @@ int main(void)
     waitForTouch();
     LCD.Clear(BLACK);
 
-    LCD.WriteLine("Executing CUE 1");
-    cue1();
+    stateMachine.drive(50.0);
+
+    // LCD.WriteLine("Executing CUE 1");
+    // cue1();
     
-    LCD.WriteLine("Executing TASK WINDOW");
-    taskWindow();
+    // LCD.WriteLine("Executing TASK WINDOW");
+    // taskWindow();
 
 	return 0;
 }

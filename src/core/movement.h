@@ -28,7 +28,7 @@ class StateMachine
          * the calibrated left-right ratio. A negative
          * percentage indicates reverse.
          */
-        void drive(int speed);
+        void drive(float speed);
 
         /**
          * Moves the robot a given number of inches at the given 
@@ -37,7 +37,7 @@ class StateMachine
          * 
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
-        void drive(int speed, float inches);
+        void drive(float speed, float inches);
 
         /**
          * Moves the robot a given number of inches at the given
@@ -46,7 +46,7 @@ class StateMachine
          * 
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
-        void drive(int speedL, int speedR, float inches);
+        void drive(float speedL, float speedR, float inches);
 
         /**
          * Moves the robot along the line detected by the passed
@@ -54,7 +54,7 @@ class StateMachine
          * 
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
-        void lineFollow(int speed, LightDetector* lightDetector);
+        void lineFollow(float speed, LightDetector* lightDetector);
 
         /**
          * Stops the robot in place
@@ -107,4 +107,12 @@ class StateMachine
         FEHMotor motorR{ FEHMotor::Motor2, 9.0 };
         DigitalEncoder encoderL{ FEHIO::P0_0 };
         DigitalEncoder encoderR{ FEHIO::P1_0 };
+
+        /**
+         * Adjusts the variable at the given address based on the
+         * battery voltage, using the formula from Class R14's slides:
+         * 
+         * actual_%_power = 11.5/current_battery_voltage * desired_%_power
+         */
+        void adjustForBattery(float* speed);
 };

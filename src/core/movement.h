@@ -40,6 +40,15 @@ class StateMachine
         void drive(int speed, float inches);
 
         /**
+         * Moves the robot a given number of inches at the given
+         * speed %s, per-motor. A negative percentage indicates
+         * reverse.
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void drive(int speedL, int speedR, float inches);
+
+        /**
          * Moves the robot along the line detected by the passed
          * LightDetector context until its state becomes UNKNOWN.
          * 
@@ -60,6 +69,38 @@ class StateMachine
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
         void turn(float deg);
+
+        /**
+         * Turns the robot with the left wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotL(float deg);
+
+        /**
+         * Turns the robot with the right wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotR(float deg);
+
+        /**
+         * Turns the robot with the left wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotL(float deg, float speed);
+
+        /**
+         * Turns the robot with the right wheel staying in place.
+         * Please call with a nonzero value of degrees obviously :)
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void pivotR(float deg, float speed);
     private:
         STATE currentState;
         FEHMotor motorL{ FEHMotor::Motor1, 9.0 };

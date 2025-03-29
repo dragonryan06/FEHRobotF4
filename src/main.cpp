@@ -10,14 +10,16 @@
 #include "core/utility.h"
 #include "core/movement.h"
 #include "sensing/light.h"
+#include "interaction/arm.h"
 
-#define VERSION_STR "v1.4.2 Milestone 4"
-#define START_LIGHT_THRESH 2.5
+#define VERSION_STR "v1.5.4 Milestone 4"
+#define START_LIGHT_THRESH 2.0
 
 #define RCS_ID "0150F4CPJ"
 
 StateMachine stateMachine;
 LightDetector lightDetector;
+RobotArm robotArm;
 
 /**
  * Waits for the start light, then drives to and aligns with
@@ -28,6 +30,12 @@ void cue1()
     LCD.WriteLine("CUE 1: Waiting for light");
     while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
+    // Lower arm
+    robotArm.moveTo(136, 1.0);
+    // Turn slightly
+    stateMachine.pivotL(-11.5);
+    // Drive up to stump
+    stateMachine.drive(35, 16.0);
 }
 
 /**
@@ -36,7 +44,9 @@ void cue1()
  */
 void taskApplePickup() 
 {
-
+    stateMachine.drive(35, 1.0);
+    Sleep(1.0);
+    robotArm.moveTo(100, 1.0);
 }
 
 /**
@@ -45,7 +55,25 @@ void taskApplePickup()
  */
 void cue2()
 {
-
+    stateMachine.pivotL(135);
+    stateMachine.drive(35,15);
+    stateMachine.turn(-80);
+    Sleep(0.5);
+    stateMachine.drive(40,40,28);
+    Sleep(0.5);
+    stateMachine.turn(-50);
+    stateMachine.drive(35,15.5);
+    robotArm.moveTo(160,1);
+    stateMachine.turn(-10);
+    robotArm.moveTo(180,1);
+    stateMachine.turn(10);
+    robotArm.moveTo(120,1);
+    // Sleep(0.5);
+    // stateMachine.drive(35,6);
+    // Sleep(0.5);
+    // stateMachine.turn(98);
+    // Sleep(0.5);
+    // stateMachine.drive(35,11);
 }
 
 /**
@@ -53,7 +81,8 @@ void cue2()
  */
 void taskAppleDropoff()
 {
-
+    // robotArm.moveTo(150,2.0);
+    // stateMachine.drive(-35, 5);
 }
 
 /**
@@ -61,7 +90,7 @@ void taskAppleDropoff()
  */
 void cue3()
 {
-
+    // stateMachine.turn(-60);
 }
 
 /**
@@ -71,13 +100,22 @@ void cue3()
  */
 void taskFertilizer()
 {
-
+    // Sleep(1.0);
+    // arm.SetDegree(90);
+    // Sleep(1.0);
+    // arm.SetDegree(170);
+    // Sleep(0.5);
+    // stateMachine.drive(-35, 1.0);
+    // arm.SetDegree(180);
+    // Sleep(0.5);
+    // arm.SetDegree(100);
+    // Sleep(0.5);
 }
 
 int main(void)
 {
     // RCS builtin setup menu
-    RCS.InitializeTouchMenu(RCS_ID);
+    //RCS.InitializeTouchMenu(RCS_ID);
     // Our setup menu
     LCD.Clear(BLACK);
     LCD.WriteRC(VERSION_STR, 0, (25-strlen(VERSION_STR))*0.5 + 1);

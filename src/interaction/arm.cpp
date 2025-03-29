@@ -1,6 +1,9 @@
-#include <FEHServo.h>
+#include <cmath>
 
-#include <arm.h>
+#include <FEHServo.h>
+#include <FEHUtility.h>
+
+#include "arm.h"
 
 #define LERP_TICK_LEN 0.01
 #define SWING_DEG 5
@@ -23,10 +26,11 @@ void RobotArm::moveTo(float degrees, float seconds)
 {
     // This int cast doesnt matter into the hundreths of seconds.
     int ticks = (int)(seconds/LERP_TICK_LEN);
-    float perTick = (rotation-degrees)/(float)ticks;
+    float perTick = (degrees-rotation)/(float)ticks;
     for (int i = 0; i < ticks; i++) 
     {
         setRotation(rotation+perTick);
+        Sleep(LERP_TICK_LEN);
     }
 }
 

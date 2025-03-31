@@ -38,3 +38,38 @@ LightDetector::LINE_STATE LightDetector::getLineFollowState()
     }
     return state;
 }
+
+void LightDetector::debugVisualizeLineState()
+{
+    if (optR.Value() > 2.6)
+    {
+        LCD.SetFontColor(GREEN);
+        LCD.FillRectangle(0,0,106,240);
+    } else 
+    {
+        LCD.SetFontColor(RED);
+        LCD.FillRectangle(0,0,106,240);
+    }
+    if (optC.Value() > 2.6) 
+    {
+        LCD.SetFontColor(GREEN);
+        LCD.FillRectangle(106,0,213,240);
+    } else 
+    {
+        LCD.SetFontColor(RED);
+        LCD.FillRectangle(106,0,213,240);
+    }
+    if (optL.Value() > 2.6)
+    {
+        LCD.SetFontColor(GREEN);
+        LCD.FillRectangle(213,0,320,240);
+    } else
+    {
+        LCD.SetFontColor(RED);
+        LCD.FillRectangle(213,0,320,240);
+    }
+    LCD.SetFontColor(BLACK);
+    LCD.DrawVerticalLine(106,0,240);
+    LCD.DrawVerticalLine(213,0,240);
+    LCD.SetFontColor(WHITE);
+}

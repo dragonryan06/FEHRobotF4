@@ -35,6 +35,12 @@ class LightDetector
          */
         LINE_STATE getLineFollowState();
 
+        /**
+         * Clears the screen and draws a colorful
+         * image representing line following state.
+         */
+        void debugVisualizeLineState();
+
     private:
         LINE_STATE state = LINE_STATE::UNKNOWN;
         AnalogInputPin cdS{ FEHIO::P3_0 };

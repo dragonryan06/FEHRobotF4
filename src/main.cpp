@@ -12,7 +12,7 @@
 #include "sensing/light.h"
 #include "interaction/arm.h"
 
-#define VERSION_STR "v1.5.4 Milestone 4"
+#define VERSION_STR "v1.6.1 Milestone 4"
 #define START_LIGHT_THRESH 2.0
 
 #define RCS_ID "0150F4CPJ"
@@ -27,7 +27,16 @@ RobotArm robotArm;
  */
 void cue1()
 {
-
+    // LCD.WriteLine("CUE 1: Waiting for light");
+    // while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
+    // LCD.WriteLine("CUE 1: Moving!");
+    // robotArm.setRotation(0);
+    // stateMachine.turn(-40);
+    // stateMachine.drive(15, 0.5);
+    // stateMachine.driveUntilLineFound(10, &lightDetector);
+    // stateMachine.lineFollow(10, &lightDetector);
+    // stateMachine.pivotL(-10);
+    // stateMachine.drive(-15, 1.0);
 }
 
 /**
@@ -37,7 +46,14 @@ void cue1()
  */
 void taskComposter()
 {
-
+    robotArm.moveTo(90, 1.0);
+    robotArm.moveTo(180, 0.5);
+    for (int i = 0; i < 3; i++) {
+        stateMachine.drive(-35, 1.0);
+        robotArm.moveTo(90, 1.0);
+        stateMachine.drive(35, 1.0);
+        robotArm.moveTo(180, 0.5);
+    }
 }
 
 /**

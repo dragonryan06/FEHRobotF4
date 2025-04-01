@@ -36,11 +36,11 @@ LightDetector::LINE_STATE LightDetector::getLineFollowState()
     {
         state = OK;
     }
-    if (optL.Value() > LINEFOLLOW_THRESH)
+    if (optR.Value() > LINEFOLLOW_THRESH)
     {
         state = TOO_LEFT;
     }
-    if (optR.Value() > LINEFOLLOW_THRESH)
+    if (optL.Value() > LINEFOLLOW_THRESH)
     {
         state = TOO_RIGHT;
     }
@@ -54,7 +54,7 @@ LightDetector::LINE_STATE LightDetector::getLastLineState()
 
 void LightDetector::debugVisualizeLineState()
 {
-    if (optR.Value() > LINEFOLLOW_THRESH)
+    if (optL.Value() > LINEFOLLOW_THRESH)
     {
         LCD.SetFontColor(GREEN);
         LCD.FillRectangle(0,0,106,240);
@@ -72,7 +72,7 @@ void LightDetector::debugVisualizeLineState()
         LCD.SetFontColor(RED);
         LCD.FillRectangle(106,0,213,240);
     }
-    if (optL.Value() > LINEFOLLOW_THRESH)
+    if (optR.Value() > LINEFOLLOW_THRESH)
     {
         LCD.SetFontColor(GREEN);
         LCD.FillRectangle(213,0,320,240);

@@ -2,6 +2,8 @@
 
 #include "light.h"
 
+#define LINEFOLLOW_THRESH 2.7
+
 unsigned int LightDetector::getCdSColor() 
 {
     unsigned int color = BLACK;
@@ -21,27 +23,38 @@ float LightDetector::getCdSIntens()
     return cdS.Value();
 }
 
+bool LightDetector::getCenterLine()
+{
+    return optC.Value() > LINEFOLLOW_THRESH;
+}
+
 LightDetector::LINE_STATE LightDetector::getLineFollowState()
 {
+    lastState = state;
     state = UNKNOWN;
-    if (optC.Value() > 3)
+    if (optC.Value() > LINEFOLLOW_THRESH)
     {
         state = OK;
     }
-    if (optL.Value() > 2.7)
+    if (optL.Value() > LINEFOLLOW_THRESH)
     {
         state = TOO_LEFT;
     }
-    if (optR.Value() > 2.7)
+    if (optR.Value() > LINEFOLLOW_THRESH)
     {
         state = TOO_RIGHT;
     }
     return state;
 }
 
+LightDetector::LINE_STATE LightDetector::getLastLineState()
+{
+    return lastState;
+}
+
 void LightDetector::debugVisualizeLineState()
 {
-    if (optR.Value() > 2.6)
+    if (optR.Value() > LINEFOLLOW_THRESH)
     {
         LCD.SetFontColor(GREEN);
         LCD.FillRectangle(0,0,106,240);
@@ -50,7 +63,7 @@ void LightDetector::debugVisualizeLineState()
         LCD.SetFontColor(RED);
         LCD.FillRectangle(0,0,106,240);
     }
-    if (optC.Value() > 2.6) 
+    if (optC.Value() > LINEFOLLOW_THRESH) 
     {
         LCD.SetFontColor(GREEN);
         LCD.FillRectangle(106,0,213,240);
@@ -59,7 +72,7 @@ void LightDetector::debugVisualizeLineState()
         LCD.SetFontColor(RED);
         LCD.FillRectangle(106,0,213,240);
     }
-    if (optL.Value() > 2.6)
+    if (optL.Value() > LINEFOLLOW_THRESH)
     {
         LCD.SetFontColor(GREEN);
         LCD.FillRectangle(213,0,320,240);

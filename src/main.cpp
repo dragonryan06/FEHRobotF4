@@ -36,11 +36,8 @@ int main(void)
     waitForTouch();
     LCD.Clear(BLACK);
 
-    while (true) {
-        Sleep(0.5);
-        lightDetector.debugVisualizeLineState();
-    }
-    // stateMachine.lineFollow(35, &lightDetector);
+    stateMachine.driveUntilLineFound(15, &lightDetector);
+    stateMachine.lineFollow(15, &lightDetector);
 
 	return 0;
 }

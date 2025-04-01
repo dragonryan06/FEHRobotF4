@@ -59,6 +59,18 @@ void StateMachine::drive(float speedL, float speedR, float inches)
     stop();
 }
 
+void StateMachine::driveUntilLineFound(float speed, LightDetector* lightDetector)
+{
+    adjustForBattery(&speed);
+    motorL.SetPercent(-speed);
+    motorR.SetPercent(speed);
+    currentState = STATE::MOVING;
+
+    while (!lightDetector->getCenterLine());
+
+    stop();
+}
+
 void StateMachine::lineFollow(float speed, LightDetector* lightDetector) 
 {
     adjustForBattery(&speed);
@@ -75,12 +87,12 @@ void StateMachine::lineFollow(float speed, LightDetector* lightDetector)
                 motorR.SetPercent(speed);
                 break;
             case LightDetector::TOO_LEFT:
-                motorL.SetPercent(-speed-1);
-                motorR.SetPercent(speed-1);
+                motorL.SetPercent(-speed);
+                motorR.SetPercent(-speed);
                 break;
             case LightDetector::TOO_RIGHT:
-                motorL.SetPercent(-speed+1);
-                motorR.SetPercent(speed+1);
+                motorL.SetPercent(speed);
+                motorR.SetPercent(speed);
                 break;
         }
         state = lightDetector->getLineFollowState();

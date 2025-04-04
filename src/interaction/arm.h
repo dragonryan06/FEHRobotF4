@@ -42,8 +42,8 @@ class RobotArm
          */
         void swingUp();
     private:
-        const int min = 600;
-        const int max = 2150;
+        const int min = 500;
+        const int max = 1815;
         float rotation;
         FEHServo arm { FEHServo::Servo0 };
 };

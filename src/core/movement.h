@@ -49,6 +49,13 @@ class StateMachine
         void drive(float speedL, float speedR, float inches);
 
         /**
+         * Drives forwards until a line is seen by the center sensor.
+         * 
+         * !!DOES NOT RETURN UNTIL COMPLETE!!
+         */
+        void driveUntilLineFound(float speed, LightDetector* lightDetector);
+
+        /**
          * Moves the robot along the line detected by the passed
          * LightDetector context until its state becomes UNKNOWN.
          * 

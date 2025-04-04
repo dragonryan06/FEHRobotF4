@@ -12,7 +12,7 @@
 #include "sensing/light.h"
 #include "interaction/arm.h"
 
-#define VERSION_STR "v1.5.4 Milestone 4"
+#define VERSION_STR "v1.6.3 Milestone 5"
 #define START_LIGHT_THRESH 2.0
 
 #define RCS_ID "0150F4CPJ"
@@ -22,94 +22,58 @@ LightDetector lightDetector;
 RobotArm robotArm;
 
 /**
- * Waits for the start light, then drives to and aligns with
- * the apple bucket on the tree stump.
+ * Moves over to the composter from
+ * the start point.
  */
 void cue1()
 {
     LCD.WriteLine("CUE 1: Waiting for light");
     while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
-    // Lower arm
-    robotArm.moveTo(136, 1.0);
-    // Turn slightly
-    stateMachine.pivotL(-11.5);
-    // Drive up to stump
-    stateMachine.drive(35, 16.0);
+    stateMachine.drive(35, 11.0);
+    stateMachine.turn(-89);
+    stateMachine.drive(35, 3.0);
 }
 
 /**
- * Spears the apple bucket with the arm, then lifts it into
- * the air.
+ * Turns the composter by repeatedly 
+ * pressing down on its paddles with
+ * the servo arm.
  */
-void taskApplePickup() 
+void taskComposter()
 {
-    stateMachine.drive(35, 1.0);
-    Sleep(1.0);
-    robotArm.moveTo(100, 1.0);
+    robotArm.moveTo(75, 1.0);
+    robotArm.moveTo(180, 0.5);
+    for (int i = 0; i < 3; i++)
+    {
+        stateMachine.drive(-35, 1.0);
+        robotArm.moveTo(75, 1.0);
+        stateMachine.turn(-0.1);
+        stateMachine.drive(35, 1.0);
+        robotArm.moveTo(180, 0.5);
+    }
+    robotArm.moveTo(75, 1.0);
+    for (int i = 0; i < 4; i++)
+    {
+        stateMachine.drive(-35, 1.0);
+        robotArm.moveTo(180, 1.0);
+        stateMachine.turn(-0.1);
+        stateMachine.drive(35, 1.0);
+        robotArm.moveTo(75, 1.0);
+    }
+    robotArm.moveTo(180, 0.5);
+    stateMachine.drive(-35, 8.0);
 }
 
 /**
- * Turns around from the trunk and drives up to the upper
- * level, aligning with the table.
+ * Moves from the composter back to the
+ * start point and presses the end button.
  */
 void cue2()
 {
-    stateMachine.pivotL(135);
-    stateMachine.drive(35,15);
-    stateMachine.turn(-80);
-    Sleep(0.5);
-    stateMachine.drive(40,40,28);
-    Sleep(0.5);
-    stateMachine.turn(-50);
-    stateMachine.drive(35,15.5);
-    robotArm.moveTo(160,1);
-    stateMachine.turn(-10);
-    robotArm.moveTo(180,1);
-    stateMachine.turn(10);
-    robotArm.moveTo(120,1);
-    // Sleep(0.5);
-    // stateMachine.drive(35,6);
-    // Sleep(0.5);
-    // stateMachine.turn(98);
-    // Sleep(0.5);
-    // stateMachine.drive(35,11);
-}
-
-/**
- * Sets the apple bucket down on the table.
- */
-void taskAppleDropoff()
-{
-    // robotArm.moveTo(150,2.0);
-    // stateMachine.drive(-35, 5);
-}
-
-/**
- * Moves over to and aligns with the fertlizer levers.
- */
-void cue3()
-{
-    // stateMachine.turn(-60);
-}
-
-/**
- * Gets the correct lever using RCS, then flips that arm.
- * After 5 seconds, lifts the lever back up to where it
- * started at.
- */
-void taskFertilizer()
-{
-    // Sleep(1.0);
-    // arm.SetDegree(90);
-    // Sleep(1.0);
-    // arm.SetDegree(170);
-    // Sleep(0.5);
-    // stateMachine.drive(-35, 1.0);
-    // arm.SetDegree(180);
-    // Sleep(0.5);
-    // arm.SetDegree(100);
-    // Sleep(0.5);
+    robotArm.moveTo(0, 0.5);
+    stateMachine.turn(-70);
+    stateMachine.drive(50, 8.0);
 }
 
 int main(void)
@@ -127,18 +91,14 @@ int main(void)
     waitForTouch();
     LCD.Clear(BLACK);
 
+    robotArm.moveTo(0, 0.5);
+
     LCD.WriteLine("Executing CUE 1");
     cue1();
-    LCD.WriteLine("Executing TASK ApplePickup");
-    taskApplePickup();
+    LCD.WriteLine("Executing TASK Composter");
+    taskComposter();
     LCD.WriteLine("Executing CUE 2");
     cue2();
-    LCD.WriteLine("Executing TASK AppleDropOff");
-    taskAppleDropoff();
-    LCD.WriteLine("Executing CUE 3");
-    cue3();
-    LCD.WriteLine("Executing TASK Fertilizer");
-    taskFertilizer();
     LCD.WriteLine("DONE!");
 
 	return 0;

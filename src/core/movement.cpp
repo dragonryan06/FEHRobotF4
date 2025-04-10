@@ -71,14 +71,15 @@ void StateMachine::driveUntilLineFound(float speed, LightDetector* lightDetector
     stop();
 }
 
-void StateMachine::lineFollow(float speed, LightDetector* lightDetector) 
+void StateMachine::lineFollow(float speed, LightDetector* lightDetector, float timeout) 
 {
     adjustForBattery(&speed);
     motorL.SetPercent(-speed);
     motorR.SetPercent(speed);
     currentState = STATE::MOVING;
     LightDetector::LINE_STATE state = lightDetector->getLineFollowState();
-    while (state != LightDetector::UNKNOWN) 
+    float tStart = TimeNow();
+    while (state != LightDetector::UNKNOWN && TimeNow()-tStart < timeout) 
     {
         switch (state) 
         {

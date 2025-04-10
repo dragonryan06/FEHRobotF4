@@ -61,7 +61,7 @@ class StateMachine
          * 
          * !!DOES NOT RETURN UNTIL COMPLETE!!
          */
-        void lineFollow(float speed, LightDetector* lightDetector);
+        void lineFollow(float speed, LightDetector* lightDetector, float timeout);
 
         /**
          * Stops the robot in place

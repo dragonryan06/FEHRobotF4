@@ -138,14 +138,14 @@ void taskHumidifier()
         LCD.WriteLine("Saw RED!");
         LCD.SetFontColor(WHITE);
         stateMachine.turn(8);
-        stateMachine.drive(20, 1.0);
+        stateMachine.drive(20, 2.0);
     } else 
     {
         LCD.SetFontColor(BLUE);
         LCD.WriteLine("Saw BLUE!");
         LCD.SetFontColor(WHITE);
         stateMachine.turn(-8);
-        stateMachine.drive(20, 1.0);
+        stateMachine.drive(20, 2.0);
     }
     stateMachine.lineFollow(20, &lightDetector, 3.0);
 }
@@ -162,7 +162,7 @@ void cue4()
     stateMachine.drive(20);
     Sleep(2.0);
     stateMachine.drive(-35, 2.0);
-    stateMachine.turn(-210);
+    stateMachine.turn(-212.5);
     stateMachine.drive(35, 8.0);
 }
 

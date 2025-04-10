@@ -80,7 +80,7 @@ void cue2()
     Sleep(1.5);
     stateMachine.stop();
     stateMachine.drive(-35, 1);
-    stateMachine.pivotR(100);
+    stateMachine.pivotR(102);
 }
 
 /**
@@ -116,7 +116,10 @@ void cue3()
     stateMachine.turn(-90);
     // drive up ramp
     stateMachine.drive(35, 32.0);
-    stateMachine.turn(-104);
+    stateMachine.drive(20);
+    Sleep(0.5);
+    stateMachine.stop();
+    stateMachine.turn(-106);
 }
 
 /**
@@ -162,7 +165,7 @@ void cue4()
     stateMachine.drive(20);
     Sleep(2.0);
     stateMachine.drive(-35, 2.0);
-    stateMachine.turn(-212.5);
+    stateMachine.turn(-215);
     stateMachine.drive(35, 8.0);
 }
 
@@ -247,8 +250,6 @@ int main(void)
     // LCD.WriteLine("Executing CUE 6");
     // cue6();
     // LCD.WriteLine("DONE!");
-
-    while (true) LCD.WriteLine(lightDetector.getCdSIntens());
 
 	return 0;
 }

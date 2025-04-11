@@ -225,11 +225,12 @@ void taskWindow()
  */
 void cue6()
 {
-    stateMachine.drive(20,15.0);
-    Sleep(2.0);
-    stateMachine.pivotL(170);
-    stateMachine.drive(20,22.0);
-    stateMachine.drive(30,3.0);
+    stateMachine.drive(30);
+    Sleep(4.0);
+    stateMachine.drive(-20,1.0);
+    stateMachine.turn(100);
+    stateMachine.drive(30,22.0);
+    stateMachine.drive(40,3.0);
 }
 
 int main(void)

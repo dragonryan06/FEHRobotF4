@@ -11,7 +11,7 @@ unsigned int LightDetector::getCdSColor()
     {
         color = BLUE;
     }
-    if (cdS.Value() < 0.75)
+    if (cdS.Value() < 0.70)
     {
         color = RED;
     }

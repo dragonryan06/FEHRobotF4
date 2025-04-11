@@ -140,7 +140,7 @@ void taskHumidifier()
         LCD.SetFontColor(RED);
         LCD.WriteLine("Saw RED!");
         LCD.SetFontColor(WHITE);
-        stateMachine.turn(6);
+        stateMachine.turn(12);
         stateMachine.drive(20, 2.0);
     } else 
     {
@@ -201,13 +201,7 @@ void cue5()
     stateMachine.pivotR(35);
     stateMachine.drive(40);
     Sleep(1.5);
-
-    stateMachine.drive(-35, 3.0);
-    stateMachine.pivotL(106);
-    stateMachine.drive(-35,6.0);
-    stateMachine.drive(-35, -100, 1.0);
-    stateMachine.drive(-35,-60, 7.0);
-
+    stateMachine.stop();
 }
 
 /**
@@ -215,7 +209,11 @@ void cue5()
  */
 void taskWindow()
 {
-
+    stateMachine.drive(-35, 3.0);
+    stateMachine.pivotL(106);
+    stateMachine.drive(-35,6.0);
+    stateMachine.drive(-35, -100, 1.0);
+    stateMachine.drive(-35,-60, 7.0);
 }
 
 /**

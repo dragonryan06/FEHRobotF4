@@ -226,7 +226,7 @@ void taskWindow()
 void cue6()
 {
     stateMachine.drive(20,15.0);
-    Sleep(2.5);
+    Sleep(2.0);
     stateMachine.pivotL(170);
     stateMachine.drive(20,22.0);
     stateMachine.drive(30,3.0);
@@ -267,11 +267,11 @@ int main(void)
     taskFertilizer();
      LCD.WriteLine("Executing CUE 5");
      cue5();
-    // LCD.WriteLine("Executing TASK Window");
-    // taskWindow();
-    // LCD.WriteLine("Executing CUE 6");
-    // cue6();
-    // LCD.WriteLine("DONE!");
+    LCD.WriteLine("Executing TASK Window");
+    taskWindow();
+    LCD.WriteLine("Executing CUE 6");
+    cue6();
+    LCD.WriteLine("DONE!");
 
 	return 0;
 }

@@ -205,7 +205,9 @@ void cue5()
 }
 
 /**
- * 
+ * Drives backwards, pivots around left wheel
+ * to align with window, initiates window opening,
+ * completely opens window
  */
 void taskWindow()
 {
@@ -217,7 +219,9 @@ void taskWindow()
 }
 
 /**
- * 
+ * Drives forward and aligns with the wall,
+ * pivots on left wheel to go down the ramp,
+ * goes down the ramp until button
  */
 void cue6()
 {

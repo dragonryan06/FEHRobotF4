@@ -76,8 +76,8 @@ void cue2()
     stateMachine.turn(135);
     stateMachine.drive(35, 10.0);
     // Align with the wall
-    stateMachine.drive(25);
-    Sleep(1.5);
+    stateMachine.drive(35);
+    Sleep(2.0);
     stateMachine.stop();
     stateMachine.drive(-35, 1);
     stateMachine.pivotR(102);
@@ -119,7 +119,7 @@ void cue3()
     stateMachine.drive(20);
     Sleep(0.5);
     stateMachine.stop();
-    stateMachine.turn(-106);
+    stateMachine.turn(-98);
 }
 
 /**
@@ -130,7 +130,7 @@ void taskHumidifier()
 {
     stateMachine.drive(20, 2.0);
     stateMachine.driveUntilLineFound(20, &lightDetector);
-    stateMachine.lineFollow(20, &lightDetector, 3.0);
+    stateMachine.lineFollow(10, &lightDetector, 3.0);
     stateMachine.drive(20, 4.5);
     // get color
     unsigned int color = lightDetector.getCdSColor();
@@ -140,7 +140,7 @@ void taskHumidifier()
         LCD.SetFontColor(RED);
         LCD.WriteLine("Saw RED!");
         LCD.SetFontColor(WHITE);
-        stateMachine.turn(8);
+        stateMachine.turn(6);
         stateMachine.drive(20, 2.0);
     } else 
     {
@@ -150,7 +150,7 @@ void taskHumidifier()
         stateMachine.turn(-8);
         stateMachine.drive(20, 2.0);
     }
-    stateMachine.lineFollow(20, &lightDetector, 3.0);
+    stateMachine.lineFollow(20, &lightDetector, 4.0);
 }
 
 /**
@@ -165,8 +165,8 @@ void cue4()
     stateMachine.drive(20);
     Sleep(2.0);
     stateMachine.drive(-35, 2.0);
-    stateMachine.turn(-215);
-    stateMachine.drive(35, 8.0);
+    stateMachine.turn(-210);
+    stateMachine.drive(35, 6.5);
 }
 
 /**
@@ -175,12 +175,15 @@ void cue4()
  */
 void taskFertilizer()
 {
+    stateMachine.turn(7);
     robotArm.moveTo(150, 1.0);
     stateMachine.turn(10);
     robotArm.moveTo(180, 1.0);
-    stateMachine.turn(-10);
+    stateMachine.turn(-12);
     robotArm.moveTo(90, 1.0);
+    robotArm.moveTo(180, 1.0);
     stateMachine.drive(-35, 2.0);
+    robotArm.moveTo(0, 1.0);
 }
 
 /**
@@ -190,8 +193,21 @@ void taskFertilizer()
  */
 void cue5()
 {
-    stateMachine.turn(180);
-    // stateMachine.drive()
+
+    stateMachine.drive(-35, 7.0);
+    stateMachine.turn(115);
+    stateMachine.drive(40);
+    Sleep(2.0);
+    stateMachine.pivotR(35);
+    stateMachine.drive(40);
+    Sleep(1.5);
+
+    stateMachine.drive(-35, 3.0);
+    stateMachine.pivotL(106);
+    stateMachine.drive(-35,6.0);
+    stateMachine.drive(-35, -100, 1.0);
+    stateMachine.drive(-35,-60, 7.0);
+
 }
 
 /**
@@ -243,8 +259,8 @@ int main(void)
     cue4();
     LCD.WriteLine("Executing TASK Fertilizer");
     taskFertilizer();
-    // LCD.WriteLine("Executing CUE 5");
-    // cue5();
+     LCD.WriteLine("Executing CUE 5");
+     cue5();
     // LCD.WriteLine("Executing TASK Window");
     // taskWindow();
     // LCD.WriteLine("Executing CUE 6");

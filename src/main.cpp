@@ -48,21 +48,21 @@ void taskComposter()
     robotArm.moveTo(180, 0.5);
     for (int i = 0; i < 3; i++)
     {
-        stateMachine.drive(-35, 1.0);
-        robotArm.moveTo(75, 1.0);
+        stateMachine.drive(-35, 1.5);
+        robotArm.moveTo(75, 0.75);
         stateMachine.turn(-0.1);
-        stateMachine.drive(35, 1.0);
+        stateMachine.drive(35, 1.5);
         robotArm.moveTo(180, 0.5);
     }
-    // robotArm.moveTo(75, 1.0);
-    // for (int i = 0; i < 4; i++)
-    // {
-    //     stateMachine.drive(-35, 1.0);
-    //     robotArm.moveTo(180, 1.0);
-    //     stateMachine.turn(-0.1);
-    //     stateMachine.drive(35, 1.0);
-    //     robotArm.moveTo(75, 1.0);
-    // }
+    robotArm.moveTo(75, 1.0);
+    for (int i = 0; i < 4; i++)
+    {
+        stateMachine.drive(-35, 1.5);
+        robotArm.moveTo(180, 0.5);
+        stateMachine.turn(-0.1);
+        stateMachine.drive(35, 1.5);
+        robotArm.moveTo(75, 0.75);
+    }
     robotArm.moveTo(180, 0.5);
     stateMachine.drive(-35, 0.75);
 }
@@ -112,7 +112,7 @@ void cue3()
     stateMachine.drive(35, 12.0);
     stateMachine.turn(-30);
     stateMachine.drive(35, 5.0);
-    stateMachine.drive(35);
+    stateMachine.drive(40);
     Sleep(0.75);
     stateMachine.stop();
     stateMachine.turn(-90);
@@ -165,7 +165,7 @@ void cue4()
     stateMachine.turn(-100);
     stateMachine.drive(35, 10.0);
     stateMachine.drive(20);
-    Sleep(2.0);
+    Sleep(1.0);
     stateMachine.drive(-35, 2.0);
     stateMachine.turn(-210);
     stateMachine.drive(35, 6.5);
@@ -178,12 +178,12 @@ void cue4()
 void taskFertilizer()
 {
     stateMachine.turn(7);
-    robotArm.moveTo(150, 1.0);
+    robotArm.moveTo(150, 0.5);
     stateMachine.turn(10);
+    Sleep(5.0);
     robotArm.moveTo(180, 1.0);
     stateMachine.turn(-12);
-    robotArm.moveTo(90, 1.0);
-    robotArm.moveTo(180, 1.0);
+    robotArm.moveTo(90, 0.5);
     stateMachine.drive(-35, 2.0);
     robotArm.moveTo(0, 1.0);
 }
@@ -215,9 +215,9 @@ void taskWindow()
 {
     stateMachine.drive(-35, 3.0);
     stateMachine.pivotL(106);
-    stateMachine.drive(-35,6.0);
-    stateMachine.drive(-35, -100, 1.0);
-    stateMachine.drive(-35,-60, 7.0);
+    stateMachine.drive(-35, 6.0);
+    stateMachine.drive(-45, -85, 1.0);
+    stateMachine.drive(-35,-60, 8.0);
 }
 
 /**
@@ -231,7 +231,8 @@ void cue6()
     Sleep(4.0);
     stateMachine.drive(-20,1.0);
     stateMachine.turn(100);
-    stateMachine.drive(30,22.0);
+    stateMachine.drive(30,29.0);
+    stateMachine.turn(-10);
     stateMachine.drive(40,3.0);
 }
 

@@ -30,6 +30,8 @@ void cue1()
     LCD.WriteLine("CUE 1: Waiting for light");
     while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
+    stateMachine.drive(-35,1.0);
+    stateMachine.drive(30,1.0);
     stateMachine.drive(35, 11.0);
     stateMachine.turn(-89);
     stateMachine.drive(35, 3.0);

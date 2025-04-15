@@ -48,19 +48,20 @@ void taskComposter()
     robotArm.moveTo(180, 0.5);
     for (int i = 0; i < 3; i++)
     {
-        stateMachine.drive(-35, 1.5);
-        robotArm.moveTo(75, 0.75);
+        stateMachine.drive(-35, 1.0);
+        robotArm.moveTo(60, 0.75);
         stateMachine.turn(-0.1);
-        stateMachine.drive(35, 1.5);
+        stateMachine.drive(35, 1.0);
         robotArm.moveTo(180, 0.5);
     }
+    stateMachine.turn(-2.0);
     robotArm.moveTo(75, 1.0);
     for (int i = 0; i < 4; i++)
     {
-        stateMachine.drive(-35, 1.5);
+        stateMachine.drive(-35, 1.0);
         robotArm.moveTo(180, 0.5);
         stateMachine.turn(-0.1);
-        stateMachine.drive(35, 1.5);
+        stateMachine.drive(35, 1.0);
         robotArm.moveTo(75, 0.75);
     }
     robotArm.moveTo(180, 0.5);
@@ -111,9 +112,9 @@ void cue3()
     stateMachine.turn(-150);
     stateMachine.drive(35, 12.0);
     stateMachine.turn(-30);
-    stateMachine.drive(35, 5.0);
+    stateMachine.drive(35, 1.0);
     stateMachine.drive(40);
-    Sleep(0.75);
+    Sleep(2.0);
     stateMachine.stop();
     stateMachine.turn(-90);
     // drive up ramp
@@ -162,12 +163,12 @@ void taskHumidifier()
 void cue4()
 {
     stateMachine.drive(-35, 1.0);
-    stateMachine.turn(-100);
-    stateMachine.drive(35, 10.0);
+    stateMachine.turn(-97);
+    stateMachine.drive(35, 3.0);
     stateMachine.drive(20);
-    Sleep(1.0);
+    Sleep(2.0);
     stateMachine.drive(-35, 2.0);
-    stateMachine.turn(-210);
+    stateMachine.turn(-205);
     stateMachine.drive(35, 6.5);
 }
 
@@ -216,7 +217,7 @@ void taskWindow()
     stateMachine.drive(-35, 3.0);
     stateMachine.pivotL(106);
     stateMachine.drive(-35, 6.0);
-    stateMachine.drive(-45, -85, 1.0);
+    stateMachine.drive(-50, -85, 1.0);
     stateMachine.drive(-35,-60, 8.0);
 }
 
@@ -231,7 +232,7 @@ void cue6()
     Sleep(4.0);
     stateMachine.drive(-20,1.0);
     stateMachine.turn(100);
-    stateMachine.drive(30,29.0);
+    stateMachine.drive(30,33.0);
     stateMachine.turn(-10);
     stateMachine.drive(40,3.0);
 }

@@ -75,8 +75,8 @@ void taskComposter()
  */
 void cue2()
 {
+    stateMachine.turn(140);
     robotArm.moveTo(0, 0.5);
-    stateMachine.turn(135);
     stateMachine.drive(35, 10.0);
     // Align with the wall
     stateMachine.drive(35);
@@ -93,9 +93,9 @@ void cue2()
 void taskAppleBucketPickup() 
 {
     robotArm.moveTo(120, 1.0);
-    stateMachine.drive(20, 9.0);
+    stateMachine.drive(20, 6.0);
     stateMachine.drive(20);
-    Sleep(0.5);
+    Sleep(2.5);
     stateMachine.stop();
     robotArm.moveTo(30, 1.0);
     robotArm.moveTo(120, 1.0);
@@ -145,6 +145,15 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(12);
         stateMachine.drive(20, 2.0);
+        // CUE 4 IS NOW HERE
+        stateMachine.drive(-35, 1.0);
+        stateMachine.turn(-100);
+        stateMachine.drive(35, 3.0);
+        stateMachine.drive(20);
+        Sleep(2.0);
+        stateMachine.drive(-35, 2.0);
+        stateMachine.turn(-200);
+        stateMachine.drive(35, 6.5);
     } else 
     {
         LCD.SetFontColor(BLUE);
@@ -152,6 +161,15 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(-8);
         stateMachine.drive(20, 2.0);
+        // CUE 4 IS NOW HERE
+        stateMachine.drive(-35, 1.0);
+        stateMachine.turn(-105);
+        stateMachine.drive(35, 3.0);
+        stateMachine.drive(20);
+        Sleep(2.0);
+        stateMachine.drive(-35, 2.0);
+        stateMachine.turn(-205);
+        stateMachine.drive(35, 6.5);
     }
     stateMachine.lineFollow(20, &lightDetector, 4.0);
 }
@@ -159,18 +177,8 @@ void taskHumidifier()
 /**
  * Backs up a bit and turns to line up with the window
  * then drives towards the levers.
+ * THIS IS NOW IN THE Humidifier buttons
  */
-void cue4()
-{
-    stateMachine.drive(-35, 1.0);
-    stateMachine.turn(-97);
-    stateMachine.drive(35, 3.0);
-    stateMachine.drive(20);
-    Sleep(2.0);
-    stateMachine.drive(-35, 2.0);
-    stateMachine.turn(-205);
-    stateMachine.drive(35, 6.5);
-}
 
 /**
  * Drives towards the levers, flips one down,
@@ -198,7 +206,7 @@ void cue5()
 {
 
     stateMachine.drive(-35, 7.0);
-    stateMachine.turn(115);
+    stateMachine.turn(110);
     stateMachine.drive(40);
     Sleep(2.0);
     stateMachine.pivotR(35);
@@ -216,9 +224,9 @@ void taskWindow()
 {
     stateMachine.drive(-35, 3.0);
     stateMachine.pivotL(106);
-    stateMachine.drive(-35, 6.0);
-    stateMachine.drive(-50, -85, 1.0);
-    stateMachine.drive(-35,-60, 8.0);
+    stateMachine.drive(-35, 6.5);
+    stateMachine.drive(-57, -97, 1.0);
+    stateMachine.drive(-45,-75, 8.0);
 }
 
 /**
@@ -228,10 +236,12 @@ void taskWindow()
  */
 void cue6()
 {
+    stateMachine.drive(30,4.0);
+    stateMachine.turn(10);
     stateMachine.drive(30);
-    Sleep(4.0);
+    Sleep(2.5);
     stateMachine.drive(-20,1.0);
-    stateMachine.turn(100);
+    stateMachine.turn(95);
     stateMachine.drive(30,33.0);
     stateMachine.turn(-10);
     stateMachine.drive(40,3.0);
@@ -264,10 +274,8 @@ int main(void)
     taskAppleBucketPickup();
     LCD.WriteLine("Executing CUE 3");
     cue3();
-    LCD.WriteLine("Executing TASK Humidifier");
+    LCD.WriteLine("Executing TASK Humidifier & CUE 4");
     taskHumidifier();
-    LCD.WriteLine("Executing CUE 4");
-    cue4();
     LCD.WriteLine("Executing TASK Fertilizer");
     taskFertilizer();
      LCD.WriteLine("Executing CUE 5");

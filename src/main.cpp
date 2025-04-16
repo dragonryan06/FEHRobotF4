@@ -30,7 +30,9 @@ void cue1()
     LCD.WriteLine("CUE 1: Waiting for light");
     while (lightDetector.getCdSIntens() > START_LIGHT_THRESH);
     LCD.WriteLine("CUE 1: Moving!");
-    stateMachine.drive(-35,1.0);
+    stateMachine.drive(-50);
+    Sleep(0.5);
+    stateMachine.stop();
     stateMachine.drive(30,1.0);
     stateMachine.drive(35, 11.0);
     stateMachine.turn(-89);
@@ -93,9 +95,8 @@ void cue2()
 void taskAppleBucketPickup() 
 {
     robotArm.moveTo(120, 1.0);
-    stateMachine.drive(20, 6.0);
     stateMachine.drive(20);
-    Sleep(2.5);
+    Sleep(5);
     stateMachine.stop();
     robotArm.moveTo(30, 1.0);
     robotArm.moveTo(120, 1.0);
@@ -145,16 +146,21 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(12);
         stateMachine.drive(20, 2.0);
-        stateMachine.lineFollow(20, &lightDetector, 4.0);
+        stateMachine.lineFollow(20, &lightDetector, 2.5);
         // CUE 4 IS NOW HERE
-        stateMachine.drive(-35, 1.0);
-        stateMachine.turn(-100);
-        stateMachine.drive(35, 3.0);
-        stateMachine.drive(20);
-        Sleep(2.0);
-        stateMachine.drive(-35, 2.0);
-        stateMachine.turn(-200);
-        stateMachine.drive(35, 6.5);
+        stateMachine.drive(50);
+        Sleep(0.5);
+        stateMachine.stop();
+        stateMachine.pivotL(75);
+        stateMachine.drive(35, 6.0);
+        // stateMachine.drive(-35, 1.0);
+        // stateMachine.turn(-100);
+        // stateMachine.drive(35, 3.0);
+        // stateMachine.drive(20);
+        // Sleep(2.0);
+        // stateMachine.drive(-35, 2.0);
+        // stateMachine.turn(-200);
+        // stateMachine.drive(35, 6.5);
     } else 
     {
         LCD.SetFontColor(BLUE);
@@ -162,16 +168,21 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(-8);
         stateMachine.drive(20, 2.0);
-        stateMachine.lineFollow(20, &lightDetector, 4.0);
+        stateMachine.lineFollow(20, &lightDetector, 2.5);
         // CUE 4 IS NOW HERE
-        stateMachine.drive(-35, 1.0);
-        stateMachine.turn(-105);
-        stateMachine.drive(35, 3.0);
-        stateMachine.drive(20);
-        Sleep(2.0);
-        stateMachine.drive(-35, 2.0);
-        stateMachine.turn(-205);
-        stateMachine.drive(35, 6.5);
+        stateMachine.drive(50);
+        Sleep(0.5);
+        stateMachine.stop();
+        stateMachine.pivotL(85);
+        stateMachine.drive(35, 9.0);
+        // stateMachine.drive(-35, 1.0);
+        // stateMachine.turn(-105);
+        // stateMachine.drive(35, 3.0);
+        // stateMachine.drive(20);
+        // Sleep(2.0);
+        // stateMachine.drive(-35, 2.0);
+        // stateMachine.turn(-205);
+        // stateMachine.drive(35, 6.5);
     }
 }
 

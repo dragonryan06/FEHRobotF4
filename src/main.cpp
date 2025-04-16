@@ -145,6 +145,7 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(12);
         stateMachine.drive(20, 2.0);
+        stateMachine.lineFollow(20, &lightDetector, 4.0);
         // CUE 4 IS NOW HERE
         stateMachine.drive(-35, 1.0);
         stateMachine.turn(-100);
@@ -161,6 +162,7 @@ void taskHumidifier()
         LCD.SetFontColor(WHITE);
         stateMachine.turn(-8);
         stateMachine.drive(20, 2.0);
+        stateMachine.lineFollow(20, &lightDetector, 4.0);
         // CUE 4 IS NOW HERE
         stateMachine.drive(-35, 1.0);
         stateMachine.turn(-105);
@@ -171,7 +173,6 @@ void taskHumidifier()
         stateMachine.turn(-205);
         stateMachine.drive(35, 6.5);
     }
-    stateMachine.lineFollow(20, &lightDetector, 4.0);
 }
 
 /**

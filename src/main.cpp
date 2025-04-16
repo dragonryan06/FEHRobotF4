@@ -95,8 +95,9 @@ void cue2()
 void taskAppleBucketPickup() 
 {
     robotArm.moveTo(120, 1.0);
+    stateMachine.drive(20, 3.0);
     stateMachine.drive(20);
-    Sleep(5);
+    Sleep(2.5);
     stateMachine.stop();
     robotArm.moveTo(30, 1.0);
     robotArm.moveTo(120, 1.0);

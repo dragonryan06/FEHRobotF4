@@ -35,8 +35,9 @@ void cue1()
     stateMachine.stop();
     stateMachine.drive(30,1.0);
     stateMachine.drive(35, 11.0);
-    stateMachine.turn(-89);
-    stateMachine.drive(35, 3.0);
+    stateMachine.turn(-93);
+    // Was -89 turn
+    stateMachine.drive(35, 2.7);
 }
 
 /**
@@ -58,15 +59,15 @@ void taskComposter()
     }
     stateMachine.turn(-2.0);
     robotArm.moveTo(75, 1.0);
-    for (int i = 0; i < 4; i++)
-    {
-        stateMachine.drive(-35, 1.0);
-        robotArm.moveTo(180, 0.5);
-        stateMachine.turn(-0.1);
-        stateMachine.drive(35, 1.0);
-        robotArm.moveTo(75, 0.75);
-    }
-    robotArm.moveTo(180, 0.5);
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     stateMachine.drive(-35, 1.0);
+    //     robotArm.moveTo(180, 0.5);
+    //     stateMachine.turn(-0.1);
+    //     stateMachine.drive(35, 1.0);
+    //     robotArm.moveTo(75, 0.75);
+    // }
+    // robotArm.moveTo(180, 0.5);
     stateMachine.drive(-35, 0.75);
 }
 
@@ -174,7 +175,7 @@ void taskHumidifier()
         stateMachine.drive(50);
         Sleep(0.5);
         stateMachine.stop();
-        stateMachine.pivotL(85);
+        stateMachine.pivotL(83);
         stateMachine.drive(35, 9.0);
         // stateMachine.drive(-35, 1.0);
         // stateMachine.turn(-105);
@@ -244,20 +245,23 @@ void taskWindow()
 
 /**
  * Drives forward and aligns with the wall,
- * pivots on left wheel to go down the ramp,
+ * turns to go down the ramp,
  * goes down the ramp until button
  */
 void cue6()
 {
-    stateMachine.drive(30,4.0);
+    stateMachine.drive(30,7.0);
     stateMachine.turn(10);
-    stateMachine.drive(30);
-    Sleep(2.5);
+    stateMachine.drive(30,13.0);
+    stateMachine.drive(40, 30, 4.0);    //Correctional
+    //Aligned at wall
     stateMachine.drive(-20,1.0);
     stateMachine.turn(95);
-    stateMachine.drive(30,33.0);
-    stateMachine.turn(-10);
-    stateMachine.drive(40,3.0);
+    stateMachine.drive(30,2.0);
+    stateMachine.turn(-8);              //Correctional
+    stateMachine.drive(30,31.0);
+    stateMachine.drive(40,5.0);
+    //Final button pressed
 }
 
 int main(void)

@@ -35,7 +35,7 @@ void cue1()
     stateMachine.stop();
     stateMachine.drive(30,1.0);
     stateMachine.drive(35, 11.0);
-    stateMachine.turn(-93);
+    stateMachine.turn(-95);
     // Was -89 turn
     stateMachine.drive(35, 2.7);
 }
@@ -153,7 +153,7 @@ void taskHumidifier()
         stateMachine.drive(50);
         Sleep(0.5);
         stateMachine.stop();
-        stateMachine.pivotL(75);
+        stateMachine.pivotL(70);
         stateMachine.drive(35, 6.0);
         // stateMachine.drive(-35, 1.0);
         // stateMachine.turn(-100);
@@ -236,7 +236,7 @@ void cue5()
  */
 void taskWindow()
 {
-    stateMachine.drive(-35, 3.0);
+    stateMachine.drive(-35, 2.9);
     stateMachine.pivotL(106);
     stateMachine.drive(-35, 6.5);
     stateMachine.drive(-57, -97, 1.0);
@@ -253,7 +253,7 @@ void cue6()
     stateMachine.drive(30,7.0);
     stateMachine.turn(10);
     stateMachine.drive(30,13.0);
-    stateMachine.drive(40, 30, 4.0);    //Correctional
+    stateMachine.drive(40, 30, 5.0);    //Correctional
     //Aligned at wall
     stateMachine.drive(-20,1.0);
     stateMachine.turn(95);

@@ -140,7 +140,11 @@ void taskHumidifier()
     stateMachine.drive(20, 4.5);
     // get color
     unsigned int color = lightDetector.getCdSColor();
-    while (color == BLACK) { color = lightDetector.getCdSColor(); }
+    float startTime = TimeNow();
+    while (color == BLACK && TimeNow()-startTime < 2.0) 
+    { 
+        color = lightDetector.getCdSColor();
+    }
     if (color == RED) 
     {
         LCD.SetFontColor(RED);
@@ -207,6 +211,8 @@ void taskFertilizer()
     robotArm.moveTo(180, 1.0);
     stateMachine.turn(-12);
     robotArm.moveTo(90, 0.5);
+    Sleep(0.5);
+    robotArm.moveTo(180, 0.5);
     stateMachine.drive(-35, 2.0);
     robotArm.moveTo(0, 1.0);
 }
